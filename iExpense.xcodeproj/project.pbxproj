@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07C9054229EE012A005C0F3D /* iExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C9054129EE012A005C0F3D /* iExpenseApp.swift */; };
+		07C9054229EE012A005C0F3D /* IExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C9054129EE012A005C0F3D /* IExpenseApp.swift */; };
 		07C9054429EE012A005C0F3D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C9054329EE012A005C0F3D /* ContentView.swift */; };
 		07C9054629EE012B005C0F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07C9054529EE012B005C0F3D /* Assets.xcassets */; };
 		07C9054929EE012B005C0F3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07C9054829EE012B005C0F3D /* Preview Assets.xcassets */; };
@@ -15,7 +15,7 @@
 
 /* Begin PBXFileReference section */
 		07C9053E29EE012A005C0F3D /* iExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		07C9054129EE012A005C0F3D /* iExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseApp.swift; sourceTree = "<group>"; };
+		07C9054129EE012A005C0F3D /* IExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IExpenseApp.swift; sourceTree = "<group>"; };
 		07C9054329EE012A005C0F3D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		07C9054529EE012B005C0F3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07C9054829EE012B005C0F3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		07C9054029EE012A005C0F3D /* iExpense */ = {
 			isa = PBXGroup;
 			children = (
-				07C9054129EE012A005C0F3D /* iExpenseApp.swift */,
+				07C9054129EE012A005C0F3D /* IExpenseApp.swift */,
 				07C9054329EE012A005C0F3D /* ContentView.swift */,
 				07C9054529EE012B005C0F3D /* Assets.xcassets */,
 				07C9054729EE012B005C0F3D /* Preview Content */,
@@ -77,6 +77,7 @@
 				07C9053A29EE012A005C0F3D /* Sources */,
 				07C9053B29EE012A005C0F3D /* Frameworks */,
 				07C9053C29EE012A005C0F3D /* Resources */,
+				07C9054F29EE018A005C0F3D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -132,13 +133,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		07C9054F29EE018A005C0F3D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint is not installed.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		07C9053A29EE012A005C0F3D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				07C9054429EE012A005C0F3D /* ContentView.swift in Sources */,
-				07C9054229EE012A005C0F3D /* iExpenseApp.swift in Sources */,
+				07C9054229EE012A005C0F3D /* IExpenseApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,11 +292,13 @@
 				DEVELOPMENT_TEAM = 47E3RRLYKE;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -299,11 +323,13 @@
 				DEVELOPMENT_TEAM = 47E3RRLYKE;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
