@@ -11,8 +11,38 @@ struct ContentView: View {
     // Note: when creating the shared data use @StateObject, but when you’re just using it in a
     // different view you should use @ObservedObject instead.
     @StateObject var user = User()
+    @State private var showingSheet = false
+    @State private var showingNumberView = false
+    @State private var showingUserDefaults = false
     
     var body: some View {
+        Button("Show Sheet") {
+            showingSheet.toggle()
+        }
+        .sheet(isPresented: $showingSheet) {
+            SecondView(name: "Madison")
+        }
+        
+        Spacer()
+        
+        Button("Show Number View") {
+            showingNumberView.toggle()
+        }
+        .sheet(isPresented: $showingNumberView) {
+            NumberView()
+        }
+        
+        Spacer()
+        
+        Button("Show User Defaults View") {
+            showingUserDefaults.toggle()
+        }
+        .sheet(isPresented: $showingUserDefaults) {
+            UserDefaultsView()
+        }
+        
+        Spacer()
+        
         VStack {
             Text("Your name is \(user.firstName) \(user.lastName)")
             
@@ -20,6 +50,64 @@ struct ContentView: View {
             TextField("Last name", text: $user.lastName)
         }
         .padding()
+    }
+}
+
+struct SecondView: View {
+    let name: String
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        Text("Hello, \(name)")
+        Button("Dismiss") {
+            dismiss()
+        }
+    }
+}
+
+struct NumberView: View {
+    @State private var numbers = [Int]()
+    @State private var currentNumber = 1
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(numbers, id: \.self) {
+                        Text("Row \($0)")
+                    }
+                    // On delete presents the red delete button on swipe from right to left
+                    .onDelete(perform: removeRows)
+                }
+                
+                Button("Add Number") {
+                    numbers.append(currentNumber)
+                    currentNumber += 1
+                }
+            }
+            .toolbar {
+                EditButton()
+            }
+        }
+    }
+    
+    func removeRows(at offsets: IndexSet) {
+        numbers.remove(atOffsets: offsets)
+    }
+}
+
+struct UserDefaultsView: View {
+    @State private var tapCount = UserDefaults.standard.integer(forKey: "Tap")
+    
+    var body: some View {
+        Button("Tap count: \(tapCount)") {
+            tapCount += 1
+            // Use a built-in standard istance of UserDefaults (a singleton)
+            // but can also build own instances. We're calling the key here "Tap", which
+            // has no special meaning, but we need to use that exact name when
+            // reading the data out of UserDefaults
+            UserDefaults.standard.set(self.tapCount, forKey: "Tap")
+        }
     }
 }
 
