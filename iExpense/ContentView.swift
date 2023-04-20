@@ -8,124 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Note: when creating the shared data use @StateObject, but when you’re just using it in a
-    // different view you should use @ObservedObject instead.
-    @StateObject var user = User()
-    @State private var showingSheet = false
-    @State private var showingNumberView = false
-    @State private var showingUserDefaults = false
-    
-    var body: some View {
-        Button("Show Sheet") {
-            showingSheet.toggle()
-        }
-        .sheet(isPresented: $showingSheet) {
-            SecondView(name: "Madison")
-        }
-        
-        Spacer()
-        
-        Button("Show Number View") {
-            showingNumberView.toggle()
-        }
-        .sheet(isPresented: $showingNumberView) {
-            NumberView()
-        }
-        
-        Spacer()
-        
-        Button("Show User Defaults View") {
-            showingUserDefaults.toggle()
-        }
-        .sheet(isPresented: $showingUserDefaults) {
-            UserDefaultsView()
-        }
-        
-        Spacer()
-        
-        VStack {
-            Text("Your name is \(user.firstName) \(user.lastName)")
-            
-            TextField("First name", text: $user.firstName)
-            TextField("Last name", text: $user.lastName)
-        }
-        .padding()
-    }
-}
-
-struct SecondView: View {
-    let name: String
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        Text("Hello, \(name)")
-        Button("Dismiss") {
-            dismiss()
-        }
-    }
-}
-
-struct NumberView: View {
-    @State private var numbers = [Int]()
-    @State private var currentNumber = 1
+    @StateObject var expenses = Expenses()
     
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach(numbers, id: \.self) {
-                        Text("Row \($0)")
-                    }
-                    // On delete presents the red delete button on swipe from right to left
-                    .onDelete(perform: removeRows)
+            List {
+                ForEach(expenses.items, id: \.id) {item in
+                    Text(item.name)
                 }
-                
-                Button("Add Number") {
-                    numbers.append(currentNumber)
-                    currentNumber += 1
-                }
+                .onDelete(perform: removeItems)
             }
+            .navigationTitle("iExpense")
             .toolbar {
-                EditButton()
+                Button {
+                    let generatedID = Date().timeIntervalSince1970
+                    let expense = ExpenseItem(id: generatedID, name: "Test", type: "Personal", amount: 5)
+                    expenses.items.append(expense)
+                    print(expense)
+                } label: {
+                    Image(systemName: "plus")
+                }
             }
         }
     }
     
-    func removeRows(at offsets: IndexSet) {
-        numbers.remove(atOffsets: offsets)
+    func removeItems(at offsets: IndexSet) {
+        expenses.items.remove(atOffsets: offsets)
     }
-}
-
-struct UserDefaultsView: View {
-    @State private var tapCount = UserDefaults.standard.integer(forKey: "Tap")
-    
-    var body: some View {
-        Button("Tap count: \(tapCount)") {
-            tapCount += 1
-            // Use a built-in standard istance of UserDefaults (a singleton)
-            // but can also build own instances. We're calling the key here "Tap", which
-            // has no special meaning, but we need to use that exact name when
-            // reading the data out of UserDefaults
-            UserDefaults.standard.set(self.tapCount, forKey: "Tap")
-        }
-    }
-}
-
-// Because @State only works on structs for internal struct state, we need to use the
-// @Published property observer in addition to the @StateObject property wrapper to
-// pass state around views vs just inside a struct.
-
-// @Published functions in a way like half of how @State functions, it tells Swift that
-// whenever the property changes, it should broadcast that change to any SwiftUI views
-// that are watching so they should reload. The other half, the part that says which
-// instantiated object should be watched, is wrapped using @StateObject.
-
-// Passing ObservableObject as an inherited type alias makes the class conform to the
-// ObservableObject protocol, which is required to use @StateObject when we
-// instantiate the class above.
-class User: ObservableObject {
-    @Published var firstName = "Madison"
-    @Published var lastName = "Ranf"
 }
 
 struct ContentView_Previews: PreviewProvider {
